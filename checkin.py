@@ -133,8 +133,10 @@ def checkin_and_process(cookie: str, exchange_plan: str) -> Tuple[str, str, str,
         else:
             status_msg = f"签到失败: {response_message}"
             points_gained = "0"
+            exit(1)
     except json.JSONDecodeError:
         logger.error(f"解析签到响应 JSON 失败: {checkin_response.text}")
+        exit(1)
         return status_msg, points_gained, remaining_days, remaining_points, exchange_msg
 
     status_response = make_request(STATUS_URL, 'GET', HEADERS_TEMPLATE, cookies=cookie)
@@ -153,6 +155,7 @@ def checkin_and_process(cookie: str, exchange_plan: str) -> Tuple[str, str, str,
             logger.error(f"解析剩余天数时出错: {status_data.get('data', {}).get('leftDays', 'unknown')}")
             remaining_days = "获取剩余天数失败 (数值转换错误)"
     else:
+        exit(1)
         remaining_days = "获取剩余天数失败 (HTTP请求失败)"
 
     points_response = make_request(POINTS_URL, 'GET', HEADERS_TEMPLATE, cookies=cookie)
@@ -171,6 +174,7 @@ def checkin_and_process(cookie: str, exchange_plan: str) -> Tuple[str, str, str,
             logger.error(f"解析剩余积分时出错: {points_data.get('points', 'unknown')}")
             remaining_points = "获取剩余积分失败 (数值转换错误)"
     else:
+        exit(1)
         remaining_points = "获取剩余积分失败 (HTTP请求失败)"
 
     current_points_numeric = 0
