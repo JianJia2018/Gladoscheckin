@@ -62,6 +62,7 @@
 
 ## 更新日志
 
+- **2026-11**: 修复 Actions 运行环境。`runs-on` 由 `ubuntu-latest` 固定为 `ubuntu-24.04`，避免 runner 隐式升级系统大版本；`actions/checkout` 升级到 `v7.0.1`，`actions/setup-python` 由 `v2` 升级到 `v7.1.0`，Python 版本由 `3.8` 改为 `3.12`。原配置在 runner 迁移到 Ubuntu 26.04 后无法安装 Python 3.8（`Version 3.8 with arch x64 not found`），导致签到作业失败；签到逻辑与流程步骤均未改动。
 - **2026-01**: 重构代码，添加log输出方便定位，支持新版网址，支持配置积分兑换策略。
 
 
